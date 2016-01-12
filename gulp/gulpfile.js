@@ -23,12 +23,14 @@ var utils = {
 			var dir = fs.readdirSync(folderPath);
 			for (var i = dir.length - 1; i >= 0; i--) {
 				var file = dir[i];
-				if(utils.isFile(folderPath + '/' + file)){			  		
-					folderTree.push(file);
+				if(utils.isFile(folderPath + '/' + file)){		
+					folderTree.files = folderTree.files ? folderTree.files : [];	  		
+					folderTree.files.push(file);
 				}
 				else if(utils.isDirectory(folderPath + '/' + file)){
-					folderTree[file] = [];
-					utils.getFolderTree(folderPath + '/' + file, folderTree[file]);
+					folderTree.folders = folderTree.folders ? folderTree.folders : {};	  		
+					folderTree.folders[file] = {};
+					utils.getFolderTree(folderPath + '/' + file, folderTree.folders[file]);
 				}	
   			};
 		} 
@@ -51,12 +53,12 @@ gulp.task('clearLog', function() {
 gulp.task('folderTree',function(){
 	// console.log('foldername: '+ process.argv);
 	// return;
-	var folderTree = [];
-	utils.getFolderTree(currentDir+'/project', folderTree);
-	utils.log(folderTree);
-    gulp.watch('./**.*.js',function(event){
-    	folderTree = [];
-		utils.getFolderTree(currentDir+'/project', folderTree);
-		utils.log(folderTree);
-    }); 
+	var folderTree = {};
+	utils.getFolderTree(currentDir+'/', folderTree);
+	utils.log(JSON.stringify(folderTree));
+  //   gulp.watch('./**.*.js',function(event){
+  //   	folderTree = [];
+		// utils.getFolderTree(currentDir+'/project', folderTree);
+		// utils.log(folderTree);
+  //   }); 
 });
