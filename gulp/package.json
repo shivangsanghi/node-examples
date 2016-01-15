@@ -1,10 +1,10 @@
 {
-  "name": "gulp",
+  "name": "folder-tree",
   "version": "0.0.0",
-  "description": "",
-  "main": "gulpfile.js",
+  "description": "Create a json of the folder passed. If no folder is passed then current working directory is used.",
   "dependencies": {
-    "gulp": "~3.9.0"
+    "gulp": "~3.9.0",
+    "sanghiutilities": "*"
   },
   "devDependencies": {},
   "scripts": {

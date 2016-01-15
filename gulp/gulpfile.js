@@ -1,8 +1,6 @@
 var gulp = require('gulp');
 var fs = require('fs');
-// var sanghiUtil = require('sanghi-utilities');
-// console.log(sanghiUtil);
-var currentDir = process.cwd();
+var sanghiUtil = require('sanghiutilities');
 var utils = {
 	log: function(str){
 		console.log(str);
@@ -51,14 +49,9 @@ gulp.task('clearLog', function() {
 });
 
 gulp.task('folderTree',function(){
-	// console.log('foldername: '+ process.argv);
-	// return;
+	var folderName = sanghiUtil.getValueByKey('folder-name');
+	folderName = folderName !== '' ? folderName : process.cwd();
 	var folderTree = {};
-	utils.getFolderTree(currentDir+'/', folderTree);
+	utils.getFolderTree(folderName, folderTree);	
 	utils.log(JSON.stringify(folderTree));
-  //   gulp.watch('./**.*.js',function(event){
-  //   	folderTree = [];
-		// utils.getFolderTree(currentDir+'/project', folderTree);
-		// utils.log(folderTree);
-  //   }); 
 });
