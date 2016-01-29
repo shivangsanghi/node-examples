@@ -1,0 +1,20 @@
+{
+  "name": "Chat-System",
+  "version": "1.0.0",
+  "description": "A minimal Chat application",
+  "scripts": {
+    "start": "node server",
+    "build": "gulp"
+  },
+  "author": "Shivang Sanghi",
+  "devDependencies": {
+    "del": "*",
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-browserify": "*",
+    "gulp-concat": "*",
+    "gulp-rename": "*",
+    "gulp-less": "*",
+    "gulp-uglify": "*",
+    "socket.io": "^1.4.4"
+  }
+}

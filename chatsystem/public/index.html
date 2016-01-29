@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="App">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <script src="./build/js/bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="./build/css/style.css">
+  </head>
+  <body ng-controller="baseController">
+        <!-- Login Screen  -->
+        <div ng-hide="connected">
+            <input type="text" placeholder="Enter your name" ng-model="username"></input>
+            <button ng-click="login()">Add</button>
+        </div>
+        <!-- Chat Screen  -->
+        <div ng-show="connected">
+            <div id="messageBox">
+                <div ng-repeat="message in messages" class="message" ng-class="message.type">
+                    <div ng-if="message.type !== 'message'">                
+                        {{message.message}}
+                    </div>
+                    <div ng-if="message.type === 'message'">                
+                        <span class="username">{{message.message.username}}: </span>
+                        <span class="message">{{message.message.message}}</span>
+                    </div>
+                </div>
+                <input id="messageInput" type="text" placeholder="Enter your message" ng-model="message"></input>
+                <button ng-click="sendMessage()">Send</button>
+            </div>
+            <div id="userlist">
+                <ul>
+                    <li class="user" ng-repeat="user in userlist">
+                        <div class="container">{{user.username}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+  </body>
+</html>
