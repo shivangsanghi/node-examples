@@ -24,7 +24,7 @@
     width: 92%;
 }
 
-#messageBox {
+#messageBox { 
     width: 70%;
     float: left;
 }
@@ -32,11 +32,20 @@
 #userlist {
     width: 30%;
     float: left;
-    .user:nth-child(even) {
-	    background-color: #000000;
-	}
-
-	.user:nth-child(odd) {
-	    background-color: #CCCCCC;
-	}
+    .user{
+    	list-style: none;
+    	cursor:pointer;
+	    padding: 5px;
+		border: 2px transparent solid;
+	    &.selected{
+	    	border: 2px black solid;
+	    }
+	    &:nth-child(even) {
+		    background-color: #EFEFEF;
+		}
+		&:nth-child(odd) {
+		    background-color: #CCCCCC;
+		}
+    }
+    
 }

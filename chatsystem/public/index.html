@@ -29,7 +29,7 @@
             </div>
             <div id="userlist">
                 <ul>
-                    <li class="user" ng-repeat="user in userlist">
+                    <li ng-class="{selected:(user.id==receiverId)}" class="user" ng-repeat="user in userlist" ng-click="selectReceiver(user)">
                         <div class="container">{{user.username}}</div>
                     </li>
                 </ul>

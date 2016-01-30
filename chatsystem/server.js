@@ -35,10 +35,21 @@ io.on('connection', function (socket) {
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
+    if(data.receiverId !== ''){
+      var receiver = getSocket(data.receiverId, DEFAULT_ROOM);
+      if(receiver){
+        receiver.emit('new message', {
+          username: socket.username,
+          message: data.message
+        });  
+      }
+    }
+    else{
+      socket.broadcast.emit('new message', {
+        username: socket.username,
+        message: data.message
+      });      
+    }
   });
 
   // when the client emits 'add user', this listens and executes
@@ -86,4 +97,15 @@ function getAllConnectedUsers(leaveUserId, room){
 		}
 	}
 	return users;
+}
+
+function getSocket(socketId, room){
+  var users = [];
+  for(var key in io.sockets.connected){
+    var socket = io.sockets.connected[key];
+    if(socket.rooms[room] && socket.username && socket.id===socketId){
+      return socket;      
+    }
+  }
+  return false;
 }

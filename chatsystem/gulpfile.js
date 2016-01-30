@@ -7,12 +7,13 @@ var gulp = require('gulp'),
     fs = require('fs'),
     del = require('del');
 	// deleting the build folder
-	gulp.task('clean', function() {
+	gulp.task('clean', function(done) {
 	  // You can use multiple globbing patterns as you would with `gulp.src`
+	  done();
 	  return del(['./public/build']);
 	});
 
- 	gulp.task('buildJS', function() {
+ 	gulp.task('buildJS', function(done) {
 		// Single entry point to browserify 
 		gulp.src('./public/assets/js/main.js')		
 			.pipe(browserify({
@@ -23,24 +24,28 @@ var gulp = require('gulp'),
 				gulp.src(['./public/assets/js/socket.io.min.js','./public/build/js/main.js'])
 					.pipe(gp_concat('bundle.js'))
 					.pipe(gulp.dest('./public/build/js'));	
+				done();
 			});
 
 	}); 
 
-	gulp.task('buildCSS', function () {
+	gulp.task('buildCSS', function (done) {
 	   gulp.src('./public/assets/css/**/*.less')
 	    .pipe(gp_less())
-	    .pipe(gulp.dest('./public/build/css'));
+	    .pipe(gulp.dest('./public/build/css'))
+	    .on('finish',function(){
+				done();
+			});
 	});
 
-	gulp.task('build', gulp.parallel('buildJS','buildCSS'), function() {
-	    
+	gulp.task('build', gulp.parallel('buildJS','buildCSS'), function(done) {
+	    done();
 	});
 
 	// Rerun the task when a file changes
 	gulp.task('watch', function() {
-	  gulp.watch(['./public/assets/js/**/*.js'], ['buildJS']);
-	  gulp.watch(['./public/assets/css/**/*.less'], ['buildCSS']);
+	  gulp.watch(['./public/assets/js/**/*.js'], gulp.series('buildJS'));
+	  gulp.watch(['./public/assets/css/**/*.less'], gulp.series('buildCSS'));
 	});
 
 	// The default task (called when you run `gulp` from cli)

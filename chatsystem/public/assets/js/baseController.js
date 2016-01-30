@@ -5,6 +5,7 @@
     	$scope.messages = [];
     	$scope.username = ""; 
     	$scope.userlist = [];
+    	$scope.receiverId = '';
         socketService.connect()
 	        // Whenever the server emits 'login', log the login message
 	        .add('login', function(data) {
@@ -53,8 +54,17 @@
 	    $scope.sendMessage = function(){ 
 	    	if($scope.message){
 		    	$scope.messages.push({type:'message',message:{username:'Me',message:$scope.message}});
-		    	socketService.send("new message",$scope.message);
+		    	socketService.send("new message",{message:$scope.message,receiverId: $scope.receiverId});
 		    	$scope.message = "";	    		
+	    	}
+	    }
+
+	    $scope.selectReceiver = function(user){
+	    	if($scope.receiverId === user.id){
+	    		$scope.receiverId = '';	    		
+	    	}
+	    	else{
+	    		$scope.receiverId = user.id;
 	    	}
 	    }
     }
