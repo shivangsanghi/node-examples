@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="App">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sanghi's Screen Sharing App</title>
+    <script src="./build/js/bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="./build/css/style.css">
+  </head>
+  <body ng-controller="baseController">
+        <div id="chat_panel" ng-controller="chatController">
+            <!-- Login Screen  -->
+            <div ng-hide="connected">
+                <input type="text" placeholder="Enter your name" ng-model="username"></input>
+                <button ng-click="login()">Add</button>
+            </div>
+            <!-- Chat Screen  -->
+            <div ng-show="connected">
+                <div id="messageBox">
+                    <div ng-repeat="message in messages" class="message" ng-class="message.type">
+                        <div ng-if="message.type !== 'message'">                
+                            {{message.message}}
+                        </div>
+                        <div ng-if="message.type === 'message'">                
+                            <span class="username">{{message.message.username}}: </span>
+                            <span class="message">{{message.message.message}}</span>
+                        </div>
+                    </div>
+                    <input id="messageInput" type="text" placeholder="Enter your message" ng-model="message"></input>
+                    <button ng-click="sendMessage()">Send</button>
+                </div>
+                <div id="userlist">
+                    <ul>
+                        <li ng-class="{selected:(user.id==sharingUser.peerId())}" class="user" ng-repeat="user in userlist" ng-click="selectReceiver(user)">
+                            <div class="container">
+                                <span>{{user.username}}</span>
+                                <button class="share_btn" ng-hide="sharingUser.isSender() || sharingUser.isReceiver() " ng-click="shareScreen(user)">Share</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="sharing_panel" ng-controller="screenShareController">
+            <div class="available_apps" ng-repeat="app in availableSharingApps" ng-show="sharingUser.isSender()">                
+                <div class="app_container" ng-click="selectApp(app)">
+                    <img class="image" ng-src="{{app.thumbnail.toDataURL()}}"></img>            
+                    <div class="label">{{app.name}}</div>
+                </div>
+            </div>       
+            <div ng-show="sharingUser.isReceiver()">
+                <button class="share_btn" ng-click="stopReceiving()">Stop Sharing</button>
+                <div screen-share-video-dir='' stream="remoteStream" min-width="1280" max-width="1280" min-height="720" max-height="720"></div>     
+            </div>
+        </div>
+  </body>
+</html>

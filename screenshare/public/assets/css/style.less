@@ -1,0 +1,91 @@
+#chat_panel
+{
+	.log {
+	    color: #CCCCCC;
+	    font-weight: bold;
+	    text-align: center;
+	}
+
+	.info {
+	    color: #CCCCCC;
+	    text-align: center;
+	}
+
+	.message{
+		.username {
+		    color: #FF0000;
+		    font-weight: bold;
+		}	
+
+		.message {
+		    color: #00FF00;
+		}
+	}
+
+	#messageInput {
+	    width: 92%;
+	}
+
+	#messageBox { 
+	    width: 70%;
+	    float: left;
+	}
+
+	#userlist {
+	    width: 30%;
+	    float: left;
+	    .user{
+	    	list-style: none;
+	    	cursor:pointer;
+		    padding: 5px;
+			border: 2px transparent solid;
+		    &.selected{
+		    	border: 2px black solid;
+		    }
+		    &:nth-child(even) {
+			    background-color: #EFEFEF;
+			}
+			&:nth-child(odd) {
+			    background-color: #CCCCCC;
+			}
+			.share_btn{
+				float: right;
+			}
+	    }
+	    
+	}
+}
+
+#sharing_panel
+{
+	.available_apps
+	{
+		.app_container
+		{	
+			display: inline-block;
+			float: left;
+			width: 150px;
+			padding: 10px;
+			cursor: pointer;
+		    border: 2px #797575 solid;
+    		margin: 5px;
+			&:hover
+			{
+				transform: scale(1.1);
+				transition-duration: 500ms;
+				background-color: #CCCCCC;
+			}
+			.image
+			{
+				width: 100%;
+
+			}
+
+			.label
+			{
+				text-align: center;
+				overflow-wrap: break-word;
+			}
+		}
+	}
+}
